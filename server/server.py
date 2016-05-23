@@ -66,7 +66,13 @@ class Worker(threading.Thread):
             # First string recieved is socket ID of client
             client_id = socket.recv()
             request = socket.recv()
+            
             print('Worker ID - %s. Recieved computation request.' % (self.worker_id))
+            # Store the Database
+            print('STORING THIS IN THE DATABASE')
+
+
+            # Let Client know we have recieved the messages
             result = self.compute(request)
             print('Worker ID - %s. Sending computed result back.' % (self.worker_id))
 
