@@ -26,10 +26,12 @@ class Client(threading.Thread):
         num1, num2 = self.generate_numbers()
         print('Client ID - %s. Numbers to be added - %s and %s.' % (self.identity, num1, num2))
         socket = self.get_connection()
-        
+        print(socket)
+
         # Poller is used to check for availability of data before reading from a socket.
         poller = zmq.Poller()
         poller.register(socket, zmq.POLLIN)
+        
         self.send(socket, '%s:%s' % (num1, num2))
 
         # Infinitely poll for the result. 
