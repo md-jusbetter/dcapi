@@ -12,8 +12,8 @@
 # Source - https://github.com/kasun/zeromq-client-server.git
 
 import threading
-
 import zmq
+import mysql.connector
 
 class Server(object):
     ''' Front facing server. '''
@@ -63,14 +63,27 @@ class Worker(threading.Thread):
         socket.connect('inproc://backend')
 
         while True:
+            #We will put the connect here for now
+            db = mysql.connector.connect(user='root', password='Mike2997!', host='127.0.0.1', database='dcapi-test')
+            cursor = db.cursor()
+
             # First string recieved is socket ID of client
             client_id = socket.recv()
             request = socket.recv()
             
             print('Worker ID - %s. Recieved computation request.' % (self.worker_id))
+            
             # Store the Database
-            print('STORING THIS IN THE DATABASE')
-
+            sql = """INSERT INTO inputtest(test)
+                    VALUES ('Mac')"""
+            try:
+            # Execute the SQL command
+                cursor.execute(sql)
+                # Commit your changes in the database
+                db.commit()
+            except:
+                # Rollback in case there is any error
+                db.rollback()
 
             # Let Client know we have recieved the messages
             result = self.compute(request)
@@ -79,6 +92,7 @@ class Worker(threading.Thread):
             # For successful routing of result to correct client, the socket ID of client should be sent first.
             socket.send(client_id, zmq.SNDMORE)
             socket.send(result)
+            db.close()
 
     def compute(self, request):
         ''' Computation takes place here. Adds the two numbers which are in the request and return result. '''
