@@ -64,7 +64,7 @@ class Client(threading.Thread):
         # It prepends identity of the socket with each message.
         socket = self.zmq_context.socket(zmq.DEALER)
         socket.setsockopt(zmq.IDENTITY, self.identity)
-        socket.connect('tcp://127.0.0.1:5001')
+        socket.connect('tcp://198.61.176.41:5001')
         return socket
 
     def generate_numbers(self):
