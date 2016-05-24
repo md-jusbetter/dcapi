@@ -2,7 +2,7 @@ import RPi.GPIO as GPIO
 
 GPIO.setmode(GPIO.BCM)
 
-GPIO.setup(17, GPIO.IN)
+GPIO.setup(17, GPIO.OUT)
 
 while True:
     input_value = GPIO.input(17)
