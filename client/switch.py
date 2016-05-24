@@ -1,6 +1,6 @@
 import RPi.GPIO as GPIO
 import time
-import client
+
 
 GPIO.setmode(GPIO.BCM)
 
@@ -10,6 +10,6 @@ while True:
     input_state = GPIO.input(18)
     if input_state == False:
         print('Button Pressed')
-	print('Lets Call ZeroMQ with some data')
-
+		print('Lets Call ZeroMQ with some data')
+		execfile('client.py')
         time.sleep(0.2)
